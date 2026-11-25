@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f4ef">
+    <meta name="description" content="Portfolio étudiant — BUT 1. Découvrez mon parcours, mes compétences et mes projets.">
+    <title>Portfolio — Prénom Nom</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+    <header class="site-header">
+      <a class="wordmark" href="#accueil" aria-label="Retour à l’accueil"><span class="wordmark-mark">P.</span><span data-field="name">Prénom Nom</span></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="navigation" aria-label="Ouvrir le menu"><span></span><span></span></button>
+      <nav id="navigation" class="navigation" aria-label="Navigation principale">
+        <a href="#profil">Profil</a>
+        <a href="#parcours">Parcours</a>
+        <a href="#projets">Projets</a>
+        <a href="#competences">Compétences</a>
+        <a class="nav-contact" href="#contact">Me contacter <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <main id="contenu">
+      <section id="accueil" class="hero section-wrap">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="status-dot"></span><span data-field="availability">Étudiant·e en BUT 1</span></div>
+          <h1>Bonjour,<br>moi c’est <span class="accent-text" data-field="firstName">Prénom</span><span class="period">.</span></h1>
+          <p class="hero-lead" data-field="intro">Je construis mon parcours, une idée et un projet à la fois. Bienvenue dans mon portfolio.</p>
+          <div class="hero-actions">
+            <a class="button button-dark" href="#projets">Voir mes projets <span aria-hidden="true">↓</span></a>
+            <a class="text-link" href="#profil">En savoir plus <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="hero-meta"><span data-field="program">BUT 1 · Formation à renseigner</span><span class="meta-separator">/</span><span data-field="location">Ville à renseigner</span></div>
+        </div>
+        <div class="hero-art" aria-label="Illustration décorative">
+          <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+          <div class="art-sun"></div><div class="art-card card-back"><span>EN COURS</span><b>✳</b></div>
+          <div class="art-card card-front"><span>PORTFOLIO<br><b>2026</b></span><i>↗</i></div>
+          <span class="art-note note-top">CURIEUX·SE PAR NATURE</span><span class="art-note note-bottom">APPRENDRE · FAIRE · PARTAGER</span>
+          <span class="art-spark spark-one">✳</span><span class="art-spark spark-two">+</span>
+        </div>
+        <a class="scroll-hint" href="#profil"><span></span>Défiler pour découvrir</a>
+      </section>
+
+      <section id="profil" class="profile-section section-wrap">
+        <div class="section-heading"><span class="section-index">01 / PROFIL</span><span class="section-rule"></span><span class="section-note">Quelques mots sur moi</span></div>
+        <div class="profile-grid">
+          <div class="profile-title"><h2>En apprendre<br>un peu <span class="serif-accent">plus.</span></h2><div class="profile-stamp"><span>EN<br>BREF</span><b>✳</b></div></div>
+          <div class="profile-body"><p class="profile-intro" data-field="about">Je suis actuellement en première année de BUT. Ce portfolio présente mon parcours, mes apprentissages et les projets que je construis au fil de ma formation.</p><p data-field="aboutDetail">Ajoute ici quelques lignes sur ce qui t’anime, les domaines qui t’intéressent et ce que tu aimerais accomplir. Une présentation personnelle et concrète fera toute la différence.</p><div class="fact-row"><div><span class="fact-label">FORMATION</span><strong data-field="programShort">BUT 1</strong></div><div><span class="fact-label">LOCALISATION</span><strong data-field="location">À compléter</strong></div><div><span class="fact-label">EN CE MOMENT</span><strong data-field="currently">À compléter</strong></div></div></div>
+        </div>
+      </section>
+
+      <section id="parcours" class="journey-section">
+        <div class="section-wrap">
+          <div class="section-heading"><span class="section-index">02 / PARCOURS</span><span class="section-rule"></span><span class="section-note">Mon chemin jusqu’ici</span></div>
+          <div class="journey-heading"><h2>Étape après<br><span class="serif-accent">étape.</span></h2><p>Chaque expérience m’apporte de nouvelles façons de voir, de faire et d’apprendre.</p></div>
+          <div id="journey-list" class="journey-list"></div>
+        </div>
+      </section>
+
+      <section id="projets" class="projects-section section-wrap">
+        <div class="section-heading"><span class="section-index">03 / PROJETS</span><span class="section-rule"></span><span class="section-note">Du concret, des idées</span></div>
+        <div class="projects-heading"><div><h2>Ce que j’ai<br><span class="serif-accent">imaginé.</span></h2></div><p>Des travaux de cours, des projets personnels ou des expériences collectives — voici un aperçu de ce que je réalise.</p></div>
+        <div id="project-grid" class="project-grid"></div>
+        <p class="projects-footnote"><span>↗</span> Les projets sont amenés à évoluer au fil de l’année.</p>
+      </section>
+
+      <section id="competences" class="skills-section">
+        <div class="section-wrap">
+          <div class="section-heading"><span class="section-index">04 / COMPÉTENCES</span><span class="section-rule"></span><span class="section-note">Mes outils & savoir-faire</span></div>
+          <div class="skills-grid"><div><h2>En apprentissage,<br><span class="serif-accent">chaque jour.</span></h2><p>Les compétences que je développe en cours et en pratique.</p></div><div id="skill-list" class="skill-list"></div></div>
+          <div class="qualities"><span>ET AUSSI</span><div id="quality-list"></div></div>
+        </div>
+      </section>
+
+      <section id="contact" class="contact-section section-wrap">
+        <div class="contact-decoration">✳</div>
+        <span class="section-index">05 / CONTACT</span>
+        <h2>Une idée en tête ?<br><span class="serif-accent">Parlons-en.</span></h2>
+        <p>Un projet, une question ou simplement envie d’échanger ? Ma boîte mail est ouverte.</p>
+        <a id="email-link" class="button button-light" href="mailto:bonjour@example.com">M’écrire un message <span aria-hidden="true">↗</span></a>
+        <div class="contact-bottom"><span data-field="name">Prénom Nom</span><span data-field="email">email@exemple.fr</span><span data-field="location">France</span></div>
+      </section>
+    </main>
+
+    <footer class="site-footer section-wrap"><a class="wordmark" href="#accueil"><span class="wordmark-mark">P.</span><span data-field="name">Prénom Nom</span></a><span>Portfolio étudiant · 2026</span><div><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Activer le thème sombre">◐ <span>Thème</span></button><button id="print-button" class="print-button" type="button">Imprimer / PDF <span aria-hidden="true">↗</span></button></div></footer>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
