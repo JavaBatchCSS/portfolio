@@ -2,36 +2,85 @@
   "use strict";
 
   const data = window.PORTFOLIO;
-  const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
+  const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[char]);
+  const competencyMap = Object.fromEntries(data.competencies.map((item) => [item.id, item]));
 
   document.querySelectorAll("[data-field]").forEach((element) => {
     const value = data[element.dataset.field];
     if (value) element.textContent = value;
   });
-  document.title = `Portfolio — ${data.name}`;
-  document.querySelector('meta[name="description"]').content = `Portfolio étudiant de ${data.name} — parcours, compétences et projets.`;
+  document.title = `Portfolio BUT 1 GMP — ${data.name}`;
+  document.querySelector('meta[name="description"]').content = `Portfolio BUT 1 Génie mécanique et productique de ${data.name} : compétences, situations professionnelles, preuves et autoévaluation.`;
 
-  document.getElementById("journey-list").innerHTML = data.journey.map((item) => `
-    <article class="journey-item">
-      <span class="journey-date">${escapeHtml(item.date)}</span>
-      <span class="journey-marker" aria-hidden="true"></span>
-      <div><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.detail)}</p></div>
-      <span class="journey-arrow" aria-hidden="true">↗</span>
+  document.getElementById("competency-grid").innerHTML = data.competencies.map((item) => `
+    <article class="competency-card">
+      <div class="competency-top"><span class="competency-code">${escapeHtml(item.id)}</span><span class="competency-level">${escapeHtml(item.level)}</span></div>
+      <h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.summary)}</p>
     </article>`).join("");
 
-  document.getElementById("project-grid").innerHTML = data.projects.map((project) => {
-    const tags = project.tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("");
-    const content = `<div class="project-visual ${escapeHtml(project.color)}"><span class="project-number">${escapeHtml(project.number)} / 03</span><span class="project-symbol" aria-hidden="true">${project.number === "01" ? "✳" : project.number === "02" ? "◌" : "↗"}</span><span class="project-open" aria-hidden="true">↗</span></div><div class="project-info"><span class="project-category">${escapeHtml(project.category)}</span><h3>${escapeHtml(project.title)}</h3><p>${escapeHtml(project.description)}</p><div class="project-tags">${tags}</div></div>`;
-    return project.link
-      ? `<a class="project-card" href="${escapeHtml(project.link)}" target="_blank" rel="noreferrer">${content}</a>`
-      : `<article class="project-card">${content}</article>`;
-  }).join("");
+  document.getElementById("situation-grid").innerHTML = data.situations.map((item, index) => `
+    <article class="situation-card">
+      <div class="situation-top"><span class="situation-code">${escapeHtml(item.id)}</span><span>0${index + 1} / 03</span></div>
+      <span class="project-category">${escapeHtml(item.subtitle)}</span>
+      <h3>${escapeHtml(item.name)}</h3><p class="situation-description">${escapeHtml(item.description)}</p>
+      <div class="situation-actions">${item.actions.map((action) => `<div><b>${escapeHtml(action.code)}</b><span>${escapeHtml(action.text)}</span></div>`).join("")}</div>
+    </article>`).join("");
 
-  document.getElementById("skill-list").innerHTML = data.skills.map((skill) => `
-    <div class="skill-item"><div class="skill-label"><strong>${escapeHtml(skill.name)}</strong><span>${escapeHtml(skill.level)}</span></div><div class="skill-track" role="progressbar" aria-label="${escapeHtml(skill.name)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Number(skill.percent)}"><span style="--level:${Math.max(0, Math.min(100, Number(skill.percent)))}%"></span></div></div>`).join("");
-  document.getElementById("quality-list").innerHTML = data.qualities.map((item) => `<span>${escapeHtml(item)}</span>`).join("");
+  const evidence = Array.isArray(data.evidence) ? data.evidence : [];
+  const filters = document.getElementById("evidence-filters");
+  const evidenceList = document.getElementById("evidence-list");
+  const count = document.getElementById("evidence-count");
+  let activeFilter = "all";
+
+  function renderEvidence() {
+    const shown = activeFilter === "all" ? evidence : evidence.filter((item) => (item.competencies || []).includes(activeFilter));
+    count.textContent = `${shown.length} preuve${shown.length === 1 ? "" : "s"} ${shown.length ? "sélectionnée" + (shown.length === 1 ? "" : "s") : "à compléter"}`;
+    if (!shown.length) {
+      evidenceList.innerHTML = `<div class="empty-evidence"><span>✳</span><div><h3>${activeFilter === "all" ? "Ton portfolio commence ici." : `Aucune preuve liée à ${escapeHtml(activeFilter)} pour l’instant.`}</h3><p>Choisis une trace réelle (SAÉ, TP, TD, projet ou engagement), puis ajoute son contexte, ta contribution, le résultat et ton recul dans <code>evidence</code> du fichier <code>data.js</code>.</p><p class="empty-hint">Exemples de traces : photo annotée d’une pièce réalisée, extrait de dossier de production, maquette numérique ou compte rendu de TP.</p></div></div>`;
+      return;
+    }
+
+    evidenceList.innerHTML = shown.map((item) => {
+      const tags = (item.competencies || []).map((id) => `<span>${escapeHtml(id)} · ${escapeHtml(competencyMap[id]?.name || "Compétence")}</span>`).join("");
+      const proofLink = typeof item.link === "string" && /^https?:\/\//i.test(item.link)
+        ? `<a class="evidence-link" href="${escapeHtml(item.link)}" target="_blank" rel="noreferrer">Voir la preuve <span aria-hidden="true">↗</span></a>`
+        : "";
+      return `<article class="evidence-card">
+        <div class="evidence-card-head"><span class="evidence-context">${escapeHtml(item.context || "Contexte à préciser")}</span><span class="evidence-date">${escapeHtml(item.date || "Date à préciser")}</span></div>
+        <h3>${escapeHtml(item.title || "Preuve sans titre")}</h3>
+        <p>${escapeHtml(item.description || "")}</p>
+        <div class="evidence-reflection"><span>MON RECUL</span><p>${escapeHtml(item.reflection || "À compléter : ce que j’ai appris, ce qui a été difficile et la prochaine étape.")}</p></div>
+        <div class="evidence-card-foot"><div class="project-tags">${tags}</div>${proofLink}</div>
+      </article>`;
+    }).join("");
+  }
+
+  filters.innerHTML = `<button type="button" class="filter-chip is-active" data-filter="all" aria-pressed="true">Toutes <span>${evidence.length}</span></button>` +
+    data.competencies.map((item) => {
+      const total = evidence.filter((entry) => (entry.competencies || []).includes(item.id)).length;
+      return `<button type="button" class="filter-chip" data-filter="${escapeHtml(item.id)}" aria-pressed="false">${escapeHtml(item.id)} <span>${total}</span></button>`;
+    }).join("");
+  filters.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-filter]");
+    if (!button) return;
+    activeFilter = button.dataset.filter;
+    filters.querySelectorAll(".filter-chip").forEach((chip) => {
+      const active = chip === button;
+      chip.classList.toggle("is-active", active);
+      chip.setAttribute("aria-pressed", String(active));
+    });
+    renderEvidence();
+  });
+  renderEvidence();
+
+  document.getElementById("assessment-grid").innerHTML = data.competencies.map((item) => `
+    <article class="assessment-card">
+      <div class="assessment-label"><span>${escapeHtml(item.id)} · ${escapeHtml(item.name)}</span><strong>${escapeHtml(data.assessment[item.id] || "À autoévaluer")}</strong></div>
+      <p>Dans un cas simple, quelle preuve montre ce que tu sais déjà mobiliser ? Qu’est-ce qui te reste à travailler ?</p>
+      <a href="#preuves" class="assessment-link">Relier à une preuve <span aria-hidden="true">↗</span></a>
+    </article>`).join("");
 
   const emailLink = document.getElementById("email-link");
   emailLink.href = `mailto:${encodeURIComponent(data.email)}`;
@@ -50,26 +99,25 @@
   }));
 
   const themeToggle = document.getElementById("theme-toggle");
-  const savedTheme = localStorage.getItem("portfolio-theme");
-  if (savedTheme === "dark") document.documentElement.dataset.theme = "dark";
   themeToggle.addEventListener("click", () => {
     const dark = document.documentElement.dataset.theme !== "dark";
     document.documentElement.dataset.theme = dark ? "dark" : "light";
-    localStorage.setItem("portfolio-theme", dark ? "dark" : "light");
     themeToggle.setAttribute("aria-label", dark ? "Activer le thème clair" : "Activer le thème sombre");
   });
   document.getElementById("print-button").addEventListener("click", () => window.print());
 
-  const revealObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-        observer.unobserve(entry.target);
-      }
+  if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".profile-grid, .competency-card, .situation-card, .evidence-card, .assessment-card, .contact-section").forEach((element) => {
+      element.classList.add("reveal");
+      revealObserver.observe(element);
     });
-  }, { threshold: 0.12 });
-  document.querySelectorAll(".profile-grid, .journey-item, .project-card, .skills-grid, .contact-section").forEach((element) => {
-    element.classList.add("reveal");
-    revealObserver.observe(element);
-  });
+  }
 })();

@@ -1,28 +1,31 @@
-# Portfolio BUT 1 · 2026
+# Portfolio BUT 1 · Génie mécanique et productique
 
-Un portfolio étudiant en français, responsive et sans dépendance de build. Le site est prêt à être publié sur GitHub Pages.
+Portfolio étudiant en français, responsive et sans dépendance de compilation. Il s’appuie sur le référentiel BUT GMP : quatre compétences (C1 à C4), trois situations professionnelles (bureau d’études, bureau des méthodes, organisation industrielle) et la situation transversale « Agir en technicien supérieur ».
 
-## Personnaliser le contenu
+## Ajouter ses informations et ses preuves
 
-Ouvre `data.js` et remplace les exemples par tes informations :
+Tout le contenu modifiable se trouve dans `data.js`. Commence par remplacer l’identité, l’IUT, les coordonnées et les textes de présentation. Les descriptions du référentiel sont des repères de formation ; elles ne prétendent pas décrire tes réalisations.
 
-- identité, formation, ville et présentation ;
-- étapes de ton parcours ;
-- projets (titre, description, catégories, couleurs, lien) ;
-- compétences et points forts ;
-- adresse e-mail.
+Ajoute ensuite une entrée dans le tableau `evidence` pour chaque trace que tu souhaites présenter :
 
-Les textes d’exemple sont des indications à remplacer. Pour ajouter un lien vers un projet, renseigne son URL dans la propriété `link`. Laisse-la vide si le projet ne possède pas encore de lien public.
+```js
+{
+  context: "SAÉ / TP / TD / projet personnel",
+  date: "Semestre 1 · 2026",
+  title: "Titre de la réalisation",
+  description: "Le besoin, ma contribution, les outils utilisés et le résultat.",
+  reflection: "Ce que j’ai appris, ce qui a été difficile et la prochaine étape.",
+  competencies: ["C1", "C2"],
+  link: "https://…"
+}
+```
+
+Le lien est facultatif. Il peut pointer vers une image, un document ou une réalisation publiée. Ne partage que des éléments que tu as le droit de rendre publics et masque les informations confidentielles. Une preuve peut être un extrait de dossier, une photo annotée, une maquette, un compte rendu ou une production personnelle — pas un extrait de cours.
+
+Dans `assessment`, remplace « À autoévaluer » par ton appréciation de chaque compétence. Relie-la à une preuve et note aussi les marges de progression : en BUT 1, l’objectif est de mobiliser les compétences de niveau 1 dans un cas simple.
 
 ## Déploiement GitHub Pages
 
-Le workflow `.github/workflows/pages.yml` publie automatiquement le site à chaque mise à jour de la branche `main`. Dans le dépôt GitHub, vérifie que **Settings → Pages → Build and deployment → Source** est réglé sur **GitHub Actions**. La première publication peut prendre quelques minutes.
+Le workflow `.github/workflows/pages.yml` publie le site après chaque mise à jour de la branche `main`. Dans le dépôt, vérifie **Settings → Pages → Build and deployment → Source → GitHub Actions**. La première publication peut prendre quelques minutes.
 
-## Fonctionnalités
-
-- navigation mobile, thème clair/sombre mémorisé et mise en page adaptative ;
-- impression ou export PDF depuis le navigateur ;
-- animations qui respectent la préférence de réduction des mouvements ;
-- contenu regroupé dans `data.js` pour une mise à jour facile.
-
-Pour prévisualiser le site, ouvre `index.html` dans un navigateur. Aucun outil de compilation n’est nécessaire.
+Le site s’imprime ou s’exporte en PDF depuis le bouton en bas de page. Le contenu reste autonome et peut être adapté pour extraire des parties dans un bilan oral ou un autre support.

@@ -1,54 +1,72 @@
-// Personnalise ce fichier pour mettre le portfolio à ton nom.
-// Les exemples entre crochets sont des indications à remplacer, pas des informations réelles.
+// Remplace les champs personnels et ajoute tes vraies preuves dans ce fichier.
+// Les contenus de référence décrivent le BUT GMP ; ils ne sont pas des réalisations personnelles.
 window.PORTFOLIO = {
   name: "Prénom Nom",
   firstName: "Prénom",
-  availability: "Étudiant·e en BUT 1",
-  program: "BUT 1 · Formation à renseigner",
-  programShort: "BUT 1",
-  location: "Ville à renseigner",
-  intro: "Je construis mon parcours, une idée et un projet à la fois. Bienvenue dans mon portfolio.",
-  about: "Je suis actuellement en première année de BUT. Ce portfolio présente mon parcours, mes apprentissages et les projets que je construis au fil de ma formation.",
-  aboutDetail: "Ajoute ici quelques lignes sur ce qui t’anime, les domaines qui t’intéressent et ce que tu aimerais accomplir. Une présentation personnelle et concrète fera toute la différence.",
-  currently: "En découverte",
+  availability: "BUT 1 · Génie mécanique et productique",
+  program: "BUT Génie mécanique et productique · 1re année",
+  programShort: "BUT 1 · GMP",
+  location: "IUT à compléter",
+  intro: "Un portfolio vivant pour relier mes apprentissages en GMP à des situations concrètes, garder des preuves et mesurer ma progression.",
+  about: "Je suis en première année de BUT Génie mécanique et productique. Ce portfolio rassemble mes preuves, mon autoévaluation et les apprentissages qui construisent mon projet professionnel.",
+  aboutDetail: "Présente-toi avec tes mots : ce qui t’intéresse dans la conception, la fabrication ou l’organisation industrielle, tes expériences et ce que tu souhaites explorer. Sélectionne les traces qui te ressemblent, pas toutes tes productions.",
+  currently: "À compléter",
   email: "email@exemple.fr",
-  projects: [
+
+  competencies: [
+    { id: "C1", name: "Spécifier", summary: "Déterminer le besoin d’un client.", level: "BUT 1 · niveau 1 · cas simple" },
+    { id: "C2", name: "Développer", summary: "Proposer des solutions adaptées au besoin et aux contraintes.", level: "BUT 1 · niveau 1 · cas simple" },
+    { id: "C3", name: "Réaliser", summary: "Concrétiser une solution.", level: "BUT 1 · niveau 1 · cas simple" },
+    { id: "C4", name: "Exploiter", summary: "Comprendre le cycle de vie du produit et du système de production.", level: "BUT 1 · niveau 1 · cas simple" }
+  ],
+
+  situations: [
     {
-      number: "01",
-      category: "PROJET DE FORMATION",
-      title: "Ton premier projet",
-      description: "Présente le besoin, ton rôle et ce que tu as appris en le réalisant.",
-      tags: ["À personnaliser", "2026"],
-      color: "lavender",
-      link: ""
+      id: "BE",
+      name: "Bureau d’études",
+      subtitle: "Concevoir un produit",
+      description: "Partir du besoin des utilisateurs pour proposer, concevoir et faire évoluer une solution mécanique.",
+      actions: [
+        { code: "C1", text: "Identifier les besoins des utilisateurs finaux et définir le cahier des charges." },
+        { code: "C2", text: "Proposer des solutions préliminaires ; étudier le prédimensionnement cinématique, statique ou dynamique." },
+        { code: "C3", text: "Réaliser une conception détaillée : maquette numérique, cotation et dimensionnement." },
+        { code: "C4", text: "Prendre en compte le cycle de vie du produit et les retours clients." }
+      ]
     },
     {
-      number: "02",
-      category: "PROJET PERSONNEL",
-      title: "Une idée à partager",
-      description: "Ajoute un projet dont tu es fier·e, même s’il est encore en cours.",
-      tags: ["À personnaliser", "En cours"],
-      color: "peach",
-      link: ""
+      id: "BM",
+      name: "Bureau des méthodes",
+      subtitle: "Industrialiser un produit",
+      description: "Préparer les procédés, les moyens et les documents nécessaires à la fabrication et à l’assemblage.",
+      actions: [
+        { code: "C1", text: "Identifier les paramètres produit, les contraintes client (quantité, qualité, coût, délai) et les moyens disponibles." },
+        { code: "C2", text: "Élaborer et valider l’APEF, la gamme de fabrication et la gamme d’assemblage." },
+        { code: "C3", text: "Préparer un dossier de production et mettre en œuvre des postes ou îlots de production." },
+        { code: "C4", text: "Analyser les indicateurs, proposer des actions correctives et contribuer à l’amélioration continue." }
+      ]
     },
     {
-      number: "03",
-      category: "TRAVAIL EN ÉQUIPE",
-      title: "Construire ensemble",
-      description: "Raconte une expérience collective et ce que tu y as apporté.",
-      tags: ["À personnaliser", "2026"],
-      color: "mint",
-      link: ""
+      id: "OPI",
+      name: "Organisation industrielle",
+      subtitle: "Organiser et piloter une production",
+      description: "Organiser les ressources et suivre une production en intégrant ses contraintes humaines et techniques.",
+      actions: [
+        { code: "C1", text: "Identifier les contraintes de production et les capacités des moyens disponibles." },
+        { code: "C2", text: "Définir l’implantation d’une ligne selon la cadence, les procédés, la sécurité et l’ergonomie." },
+        { code: "C3", text: "Définir des indicateurs qualité et des documents de suivi et de contrôle." },
+        { code: "C4", text: "Contribuer à la planification, à l’amélioration continue et à la remontée des données." }
+      ]
     }
   ],
-  journey: [
-    { date: "2025 — 2026", title: "BUT 1 · formation à renseigner", detail: "Établissement à compléter · Découverte des enseignements et premiers projets." },
-    { date: "Avant le BUT", title: "Ton parcours précédent", detail: "Ajoute ton diplôme, ton établissement ou une expérience qui compte pour toi." }
-  ],
-  skills: [
-    { name: "Compétence à ajouter", level: "En découverte", percent: 35 },
-    { name: "Outil ou logiciel", level: "Premières pratiques", percent: 48 },
-    { name: "Savoir-faire", level: "En progression", percent: 62 }
-  ],
-  qualities: ["Curiosité", "Esprit d’équipe", "Envie d’apprendre"]
+
+  // Ajoute une entrée par preuve réelle. Exemple de structure dans README.md.
+  evidence: [],
+
+  // Remplace « À autoévaluer » par ton appréciation, toujours reliée à une preuve.
+  assessment: {
+    C1: "À autoévaluer",
+    C2: "À autoévaluer",
+    C3: "À autoévaluer",
+    C4: "À autoévaluer"
+  }
 };
