@@ -30,6 +30,6 @@ La date au format `AAAA-MM-JJ` permet de classer les traces de la plus récente 
 
 ## Déploiement
 
-Le workflow `.github/workflows/pages.yml` publie le site après une mise à jour de `main`. Dans **Settings → Pages**, la source doit être **GitHub Actions**. Le portfolio est publié à l’adresse `https://javabatchcss.github.io/portfolio/`.
+GitHub Pages publie directement la branche `main` depuis la racine du dépôt. Après une modification de `data.js`, valide le changement : Pages reconstruira automatiquement le site à l’adresse `https://javabatchcss.github.io/portfolio/`.
 
 Le bouton en bas de page permet d’imprimer ou d’enregistrer le portfolio en PDF.
