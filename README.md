@@ -1,31 +1,35 @@
 # Portfolio BUT 1 · Génie mécanique et productique
 
-Portfolio étudiant en français, responsive et sans dépendance de compilation. Il s’appuie sur le référentiel BUT GMP : quatre compétences (C1 à C4), trois situations professionnelles (bureau d’études, bureau des méthodes, organisation industrielle) et la situation transversale « Agir en technicien supérieur ».
+Portfolio en français, responsive et sans dépendance de compilation. La page d’accueil présente une matrice chronologique : les lignes correspondent aux réalisations classées par date et unité d’enseignement ; les colonnes C1 à C4 indiquent les compétences mobilisées. Les filtres permettent de retrouver les traces par UE, situation professionnelle ou mot-clé.
 
-## Ajouter ses informations et ses preuves
+## Personnaliser les informations
 
-Tout le contenu modifiable se trouve dans `data.js`. Commence par remplacer l’identité, l’IUT, les coordonnées et les textes de présentation. Les descriptions du référentiel sont des repères de formation ; elles ne prétendent pas décrire tes réalisations.
+Modifie `data.js` :
 
-Ajoute ensuite une entrée dans le tableau `evidence` pour chaque trace que tu souhaites présenter :
+- renseigne ton nom, ton établissement, ton courriel et les textes de présentation ;
+- ajoute tes réalisations dans `evidence` ;
+- conserve les identifiants de compétence `C1` à `C4` et les situations `BE`, `BM`, `OPI`.
+
+Une entrée de preuve suit cette structure :
 
 ```js
 {
-  context: "SAÉ / TP / TD / projet personnel",
-  date: "Semestre 1 · 2026",
+  date: "2026-03-15",
+  ue: "UE à renseigner",
+  context: "SAÉ, TP, TD ou projet personnel",
   title: "Titre de la réalisation",
-  description: "Le besoin, ma contribution, les outils utilisés et le résultat.",
-  reflection: "Ce que j’ai appris, ce qui a été difficile et la prochaine étape.",
+  description: "Le travail effectué, les outils utilisés et le résultat obtenu.",
+  reflection: "Ce que j’ai appris, les difficultés rencontrées et la prochaine étape.",
   competencies: ["C1", "C2"],
-  link: "https://…"
+  situations: ["BE"],
+  link: "preuves/mon-document.pdf"
 }
 ```
 
-Le lien est facultatif. Il peut pointer vers une image, un document ou une réalisation publiée. Ne partage que des éléments que tu as le droit de rendre publics et masque les informations confidentielles. Une preuve peut être un extrait de dossier, une photo annotée, une maquette, un compte rendu ou une production personnelle — pas un extrait de cours.
+La date au format `AAAA-MM-JJ` permet de classer les traces de la plus récente à la plus ancienne. Une réalisation liée à plusieurs compétences apparaît dans plusieurs colonnes de la matrice. Le lien peut être une URL publique ou un chemin relatif vers un fichier ajouté au dépôt. N’ajoute que des documents que tu peux partager et masque toute information confidentielle. Une preuve doit montrer un travail réalisé, pas simplement reprendre un support de cours.
 
-Dans `assessment`, remplace « À autoévaluer » par ton appréciation de chaque compétence. Relie-la à une preuve et note aussi les marges de progression : en BUT 1, l’objectif est de mobiliser les compétences de niveau 1 dans un cas simple.
+## Déploiement
 
-## Déploiement GitHub Pages
+Le workflow `.github/workflows/pages.yml` publie le site après une mise à jour de `main`. Dans **Settings → Pages**, la source doit être **GitHub Actions**. Le portfolio est publié à l’adresse `https://javabatchcss.github.io/portfolio/`.
 
-Le workflow `.github/workflows/pages.yml` publie le site après chaque mise à jour de la branche `main`. Dans le dépôt, vérifie **Settings → Pages → Build and deployment → Source → GitHub Actions**. La première publication peut prendre quelques minutes.
-
-Le site s’imprime ou s’exporte en PDF depuis le bouton en bas de page. Le contenu reste autonome et peut être adapté pour extraire des parties dans un bilan oral ou un autre support.
+Le bouton en bas de page permet d’imprimer ou d’enregistrer le portfolio en PDF.

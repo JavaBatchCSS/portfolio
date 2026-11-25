@@ -2,22 +2,19 @@
 // Les contenus de référence décrivent le BUT GMP ; ils ne sont pas des réalisations personnelles.
 window.PORTFOLIO = {
   name: "Prénom Nom",
-  firstName: "Prénom",
-  availability: "BUT 1 · Génie mécanique et productique",
   program: "BUT Génie mécanique et productique · 1re année",
   programShort: "BUT 1 · GMP",
   location: "IUT à compléter",
-  intro: "Un portfolio vivant pour relier mes apprentissages en GMP à des situations concrètes, garder des preuves et mesurer ma progression.",
-  about: "Je suis en première année de BUT Génie mécanique et productique. Ce portfolio rassemble mes preuves, mon autoévaluation et les apprentissages qui construisent mon projet professionnel.",
-  aboutDetail: "Présente-toi avec tes mots : ce qui t’intéresse dans la conception, la fabrication ou l’organisation industrielle, tes expériences et ce que tu souhaites explorer. Sélectionne les traces qui te ressemblent, pas toutes tes productions.",
+  about: "Je suis étudiant en première année de BUT Génie mécanique et productique. Ce portfolio rassemble mes réalisations, mes apprentissages et ma progression.",
+  aboutDetail: "Présente les domaines qui t’intéressent, tes expériences et ton projet professionnel. Sélectionne les réalisations qui illustrent le mieux ton parcours.",
   currently: "À compléter",
   email: "email@exemple.fr",
 
   competencies: [
-    { id: "C1", name: "Spécifier", summary: "Déterminer le besoin d’un client.", level: "BUT 1 · niveau 1 · cas simple" },
-    { id: "C2", name: "Développer", summary: "Proposer des solutions adaptées au besoin et aux contraintes.", level: "BUT 1 · niveau 1 · cas simple" },
-    { id: "C3", name: "Réaliser", summary: "Concrétiser une solution.", level: "BUT 1 · niveau 1 · cas simple" },
-    { id: "C4", name: "Exploiter", summary: "Comprendre le cycle de vie du produit et du système de production.", level: "BUT 1 · niveau 1 · cas simple" }
+    { id: "C1", name: "Spécifier", summary: "Déterminer le besoin d’un client.", level: "Niveau 1 · cas simple" },
+    { id: "C2", name: "Développer", summary: "Proposer des solutions adaptées au besoin et aux contraintes.", level: "Niveau 1 · cas simple" },
+    { id: "C3", name: "Réaliser", summary: "Concrétiser une solution.", level: "Niveau 1 · cas simple" },
+    { id: "C4", name: "Exploiter", summary: "Comprendre le cycle de vie du produit et du système de production.", level: "Niveau 1 · cas simple" }
   ],
 
   situations: [
@@ -59,14 +56,6 @@ window.PORTFOLIO = {
     }
   ],
 
-  // Ajoute une entrée par preuve réelle. Exemple de structure dans README.md.
+  // Ajoute une entrée par réalisation réelle. Exemple et règles de tri dans README.md.
   evidence: [],
-
-  // Remplace « À autoévaluer » par ton appréciation, toujours reliée à une preuve.
-  assessment: {
-    C1: "À autoévaluer",
-    C2: "À autoévaluer",
-    C3: "À autoévaluer",
-    C4: "À autoévaluer"
-  }
 };

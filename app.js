@@ -2,88 +2,128 @@
   "use strict";
 
   const data = window.PORTFOLIO;
+  const evidence = Array.isArray(data.evidence) ? data.evidence : [];
+  const competencyIds = data.competencies.map((item) => item.id);
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[char]);
   const competencyMap = Object.fromEntries(data.competencies.map((item) => [item.id, item]));
+  const situationMap = Object.fromEntries(data.situations.map((item) => [item.id, item]));
 
   document.querySelectorAll("[data-field]").forEach((element) => {
     const value = data[element.dataset.field];
     if (value) element.textContent = value;
   });
-  document.title = `Portfolio BUT 1 GMP — ${data.name}`;
-  document.querySelector('meta[name="description"]').content = `Portfolio BUT 1 Génie mécanique et productique de ${data.name} : compétences, situations professionnelles, preuves et autoévaluation.`;
+  const initials = data.name.trim().split(/\s+/).slice(0, 2).map((part) => part[0] || "").join("").toUpperCase();
+  document.querySelector("[data-field-initials]").textContent = initials || "GMP";
+  document.title = `Portfolio BUT GMP — ${data.name}`;
+  document.querySelector('meta[name="description"]').content = `Portfolio de ${data.name}, étudiant en Génie mécanique et productique : compétences, unités d’enseignement et preuves.`;
 
-  document.getElementById("competency-grid").innerHTML = data.competencies.map((item) => `
-    <article class="competency-card">
-      <div class="competency-top"><span class="competency-code">${escapeHtml(item.id)}</span><span class="competency-level">${escapeHtml(item.level)}</span></div>
-      <h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.summary)}</p>
+  const emailLink = `mailto:${encodeURIComponent(data.email)}`;
+  document.getElementById("nav-email").href = emailLink;
+  document.getElementById("profile-email").href = emailLink;
+
+  document.getElementById("competency-list").innerHTML = data.competencies.map((item) => `
+    <article class="competency-row">
+      <span class="competency-code">${escapeHtml(item.id)}</span>
+      <h3>${escapeHtml(item.name)}</h3>
+      <p>${escapeHtml(item.summary)}</p>
+      <span class="competency-level">${escapeHtml(item.level)}</span>
     </article>`).join("");
 
-  document.getElementById("situation-grid").innerHTML = data.situations.map((item, index) => `
-    <article class="situation-card">
-      <div class="situation-top"><span class="situation-code">${escapeHtml(item.id)}</span><span>0${index + 1} / 03</span></div>
-      <span class="project-category">${escapeHtml(item.subtitle)}</span>
-      <h3>${escapeHtml(item.name)}</h3><p class="situation-description">${escapeHtml(item.description)}</p>
-      <div class="situation-actions">${item.actions.map((action) => `<div><b>${escapeHtml(action.code)}</b><span>${escapeHtml(action.text)}</span></div>`).join("")}</div>
+  document.getElementById("situation-list").innerHTML = data.situations.map((item) => `
+    <article class="situation-row">
+      <span class="situation-code">${escapeHtml(item.id)}</span>
+      <div><h3>${escapeHtml(item.name)}</h3><p>${escapeHtml(item.subtitle)} · ${escapeHtml(item.description)}</p></div>
+      <div class="situation-competencies">${item.actions.map((action) => `<span title="${escapeHtml(action.text)}">${escapeHtml(action.code)}</span>`).join("")}</div>
     </article>`).join("");
 
-  const evidence = Array.isArray(data.evidence) ? data.evidence : [];
-  const filters = document.getElementById("evidence-filters");
-  const evidenceList = document.getElementById("evidence-list");
-  const count = document.getElementById("evidence-count");
-  let activeFilter = "all";
+  const body = document.getElementById("matrix-body");
+  const search = document.getElementById("matrix-search");
+  const ueFilter = document.getElementById("ue-filter");
+  const situationFilter = document.getElementById("situation-filter");
+  const visibleCount = document.getElementById("visible-count");
+  const matrixScroll = document.querySelector(".matrix-scroll");
 
-  function renderEvidence() {
-    const shown = activeFilter === "all" ? evidence : evidence.filter((item) => (item.competencies || []).includes(activeFilter));
-    count.textContent = `${shown.length} preuve${shown.length === 1 ? "" : "s"} ${shown.length ? "sélectionnée" + (shown.length === 1 ? "" : "s") : "à compléter"}`;
-    if (!shown.length) {
-      evidenceList.innerHTML = `<div class="empty-evidence"><span>✳</span><div><h3>${activeFilter === "all" ? "Ton portfolio commence ici." : `Aucune preuve liée à ${escapeHtml(activeFilter)} pour l’instant.`}</h3><p>Choisis une trace réelle (SAÉ, TP, TD, projet ou engagement), puis ajoute son contexte, ta contribution, le résultat et ton recul dans <code>evidence</code> du fichier <code>data.js</code>.</p><p class="empty-hint">Exemples de traces : photo annotée d’une pièce réalisée, extrait de dossier de production, maquette numérique ou compte rendu de TP.</p></div></div>`;
+  function safeLink(value) {
+    if (typeof value !== "string") return "";
+    const link = value.trim();
+    return /^https?:\/\//i.test(link) || /^(?!\/)[\w./-]+(?:[?#][\w./?=&%-]*)?$/i.test(link) ? link : "";
+  }
+
+  function sortedRecords() {
+    return evidence.slice().sort((a, b) => {
+      const timeDifference = Date.parse(b.date || "") - Date.parse(a.date || "");
+      if (!Number.isNaN(timeDifference) && timeDifference !== 0) return timeDifference;
+      return String(a.ue || "").localeCompare(String(b.ue || ""), "fr");
+    });
+  }
+
+  const formatDate = (value) => {
+    const date = new Date(`${value}T00:00:00`);
+    return Number.isNaN(date.getTime())
+      ? String(value || "Période à préciser")
+      : new Intl.DateTimeFormat("fr-FR", { month: "short", year: "numeric" }).format(date);
+  };
+
+  function renderMatrix() {
+    const query = search.value.trim().toLocaleLowerCase("fr");
+    const records = sortedRecords().filter((item) => {
+      const matchesUe = !ueFilter.value || item.ue === ueFilter.value;
+      const matchesSituation = !situationFilter.value || (item.situations || []).includes(situationFilter.value);
+      const searchable = [item.title, item.ue, item.context, item.description, item.reflection,
+        ...(item.competencies || []), ...(item.situations || [])].join(" ").toLocaleLowerCase("fr");
+      return matchesUe && matchesSituation && (!query || searchable.includes(query));
+    });
+
+    visibleCount.textContent = String(records.length);
+    if (!records.length) {
+      const message = evidence.length
+        ? "Aucune réalisation ne correspond à ces filtres. Modifie la recherche ou efface les filtres."
+        : "Aucune réalisation n’est encore renseignée. Ajoute tes travaux de SAÉ, TP, TD ou projet dans le tableau evidence de data.js.";
+      body.innerHTML = `<tr><td class="empty-cell" colspan="5"><span class="empty-symbol">—</span><strong>${message}</strong><span>Pour chaque trace, indique la date, l’UE, les compétences mobilisées et les situations professionnelles concernées.</span></td></tr>`;
       return;
     }
 
-    evidenceList.innerHTML = shown.map((item) => {
-      const tags = (item.competencies || []).map((id) => `<span>${escapeHtml(id)} · ${escapeHtml(competencyMap[id]?.name || "Compétence")}</span>`).join("");
-      const proofLink = typeof item.link === "string" && /^https?:\/\//i.test(item.link)
-        ? `<a class="evidence-link" href="${escapeHtml(item.link)}" target="_blank" rel="noreferrer">Voir la preuve <span aria-hidden="true">↗</span></a>`
-        : "";
-      return `<article class="evidence-card">
-        <div class="evidence-card-head"><span class="evidence-context">${escapeHtml(item.context || "Contexte à préciser")}</span><span class="evidence-date">${escapeHtml(item.date || "Date à préciser")}</span></div>
-        <h3>${escapeHtml(item.title || "Preuve sans titre")}</h3>
+    body.innerHTML = records.map((item) => {
+      const activeCompetencies = new Set((item.competencies || []).filter((id) => competencyIds.includes(id)));
+      const contextTags = (item.situations || []).filter((id) => situationMap[id])
+        .map((id) => `<span class="situation-tag" title="${escapeHtml(situationMap[id].name)}">${escapeHtml(id)}</span>`).join("");
+      const link = safeLink(item.link);
+      const title = escapeHtml(item.title || "Réalisation sans titre");
+      const card = `<div class="proof-card">
+        <div class="proof-card-top"><span class="proof-context">${escapeHtml(item.context || "Travail de formation")}</span>${link ? `<a class="proof-link" href="${escapeHtml(link)}" target="_blank" rel="noreferrer" aria-label="Ouvrir la preuve : ${title}">↗</a>` : ""}</div>
+        <strong>${title}</strong>
         <p>${escapeHtml(item.description || "")}</p>
-        <div class="evidence-reflection"><span>MON RECUL</span><p>${escapeHtml(item.reflection || "À compléter : ce que j’ai appris, ce qui a été difficile et la prochaine étape.")}</p></div>
-        <div class="evidence-card-foot"><div class="project-tags">${tags}</div>${proofLink}</div>
-      </article>`;
+        ${item.reflection ? `<details><summary>Mon analyse</summary><p>${escapeHtml(item.reflection)}</p></details>` : ""}
+        ${contextTags ? `<div class="proof-tags">${contextTags}</div>` : ""}
+      </div>`;
+      const cells = competencyIds.map((id) => `<td class="${activeCompetencies.has(id) ? "has-proof" : "no-proof"}">${activeCompetencies.has(id) ? card : '<span aria-label="Aucune preuve rattachée">—</span>'}</td>`).join("");
+      return `<tr><th class="record-context" scope="row"><span class="record-date">${escapeHtml(formatDate(item.date))}</span><strong>${escapeHtml(item.ue || "UE à préciser")}</strong><span>${escapeHtml(item.context || "Réalisation")}</span></th>${cells}</tr>`;
     }).join("");
   }
 
-  filters.innerHTML = `<button type="button" class="filter-chip is-active" data-filter="all" aria-pressed="true">Toutes <span>${evidence.length}</span></button>` +
-    data.competencies.map((item) => {
-      const total = evidence.filter((entry) => (entry.competencies || []).includes(item.id)).length;
-      return `<button type="button" class="filter-chip" data-filter="${escapeHtml(item.id)}" aria-pressed="false">${escapeHtml(item.id)} <span>${total}</span></button>`;
-    }).join("");
-  filters.addEventListener("click", (event) => {
-    const button = event.target.closest("button[data-filter]");
-    if (!button) return;
-    activeFilter = button.dataset.filter;
-    filters.querySelectorAll(".filter-chip").forEach((chip) => {
-      const active = chip === button;
-      chip.classList.toggle("is-active", active);
-      chip.setAttribute("aria-pressed", String(active));
-    });
-    renderEvidence();
+  const ueValues = [...new Set(evidence.map((item) => item.ue).filter(Boolean))].sort((a, b) => a.localeCompare(b, "fr"));
+  ueValues.forEach((ue) => ueFilter.add(new Option(ue, ue)));
+  data.situations.forEach((item) => situationFilter.add(new Option(`${item.id} · ${item.name}`, item.id)));
+  search.addEventListener("input", renderMatrix);
+  ueFilter.addEventListener("change", renderMatrix);
+  situationFilter.addEventListener("change", renderMatrix);
+  document.getElementById("clear-filters").addEventListener("click", () => {
+    search.value = "";
+    ueFilter.value = "";
+    situationFilter.value = "";
+    renderMatrix();
+    search.focus();
   });
-  renderEvidence();
+  renderMatrix();
 
-  document.getElementById("assessment-grid").innerHTML = data.competencies.map((item) => `
-    <article class="assessment-card">
-      <div class="assessment-label"><span>${escapeHtml(item.id)} · ${escapeHtml(item.name)}</span><strong>${escapeHtml(data.assessment[item.id] || "À autoévaluer")}</strong></div>
-      <p>Dans un cas simple, quelle preuve montre ce que tu sais déjà mobiliser ? Qu’est-ce qui te reste à travailler ?</p>
-      <a href="#preuves" class="assessment-link">Relier à une preuve <span aria-hidden="true">↗</span></a>
-    </article>`).join("");
+  const ueCount = new Set(evidence.map((item) => item.ue).filter(Boolean)).size;
+  const coveredCompetencies = new Set(evidence.flatMap((item) => item.competencies || []));
+  document.getElementById("summary-proofs").textContent = String(evidence.length);
+  document.getElementById("summary-ues").textContent = String(ueCount);
+  document.getElementById("summary-competencies").textContent = `${coveredCompetencies.size} / ${competencyIds.length}`;
 
-  const emailLink = document.getElementById("email-link");
-  emailLink.href = `mailto:${encodeURIComponent(data.email)}`;
   const menuToggle = document.querySelector(".menu-toggle");
   const navigation = document.getElementById("navigation");
   menuToggle.addEventListener("click", () => {
@@ -97,27 +137,5 @@
     menuToggle.setAttribute("aria-expanded", "false");
     menuToggle.setAttribute("aria-label", "Ouvrir le menu");
   }));
-
-  const themeToggle = document.getElementById("theme-toggle");
-  themeToggle.addEventListener("click", () => {
-    const dark = document.documentElement.dataset.theme !== "dark";
-    document.documentElement.dataset.theme = dark ? "dark" : "light";
-    themeToggle.setAttribute("aria-label", dark ? "Activer le thème clair" : "Activer le thème sombre");
-  });
   document.getElementById("print-button").addEventListener("click", () => window.print());
-
-  if ("IntersectionObserver" in window) {
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll(".profile-grid, .competency-card, .situation-card, .evidence-card, .assessment-card, .contact-section").forEach((element) => {
-      element.classList.add("reveal");
-      revealObserver.observe(element);
-    });
-  }
 })();

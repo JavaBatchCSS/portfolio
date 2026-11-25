@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f5f4ef">
-    <meta name="description" content="Portfolio étudiant — BUT 1. Découvrez mon parcours, mes compétences et mes projets.">
-    <title>Portfolio — Prénom Nom</title>
+    <meta name="theme-color" content="#102f49">
+    <meta name="description" content="Portfolio de BUT Génie mécanique et productique : compétences, unités d’enseignement et preuves classées chronologiquement.">
+    <title>Portfolio BUT GMP — Prénom Nom</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,93 +15,99 @@
   <body>
     <a class="skip-link" href="#contenu">Aller au contenu</a>
     <header class="site-header">
-      <a class="wordmark" href="#accueil" aria-label="Retour à l’accueil"><span class="wordmark-mark">P.</span><span data-field="name">Prénom Nom</span></a>
+      <a class="brand" href="#accueil"><span class="brand-mark">GMP</span><span data-field="name">Prénom Nom</span></a>
       <button class="menu-toggle" aria-expanded="false" aria-controls="navigation" aria-label="Ouvrir le menu"><span></span><span></span></button>
-      <nav id="navigation" class="navigation" aria-label="Navigation principale">
+      <nav id="navigation" class="site-nav" aria-label="Navigation principale">
+        <a href="#matrice">Matrice des preuves</a>
+        <a href="#referentiel">Référentiel</a>
         <a href="#profil">Profil</a>
-        <a href="#competences">Compétences</a>
-        <a href="#situations">Situations</a>
-        <a href="#preuves">Mes preuves</a>
-        <a href="#bilan">Mon bilan</a>
-        <a class="nav-contact" href="#contact">Me contacter <span aria-hidden="true">↗</span></a>
+        <a class="nav-contact" href="mailto:email@exemple.fr" id="nav-email">Contact</a>
       </nav>
     </header>
 
     <main id="contenu">
-      <section id="accueil" class="hero section-wrap">
-        <div class="hero-copy">
-          <div class="eyebrow"><span class="status-dot"></span><span data-field="availability">BUT 1 · Génie mécanique et productique</span></div>
-          <h1>Bonjour,<br>moi c’est <span class="accent-text" data-field="firstName">Prénom</span><span class="period">.</span></h1>
-          <p class="hero-lead" data-field="intro">Un portfolio vivant pour relier mes apprentissages en GMP à des situations concrètes, garder des preuves et mesurer ma progression.</p>
-          <div class="hero-actions">
-            <a class="button button-dark" href="#projets">Voir mes projets <span aria-hidden="true">↓</span></a>
-            <a class="text-link" href="#profil">En savoir plus <span aria-hidden="true">↗</span></a>
+      <section id="accueil" class="intro-board page-width">
+        <div class="intro-copy">
+          <div class="eyebrow"><span class="eyebrow-mark"></span>PORTFOLIO UNIVERSITAIRE <span class="eyebrow-divider">/</span> 2026</div>
+          <h1>Génie mécanique<br>et productique<span class="title-period">.</span></h1>
+          <p class="intro-lead">Un regard structuré sur mon parcours : des situations de formation, des compétences mobilisées et des preuves concrètes, classées dans le temps.</p>
+          <a class="primary-link" href="#matrice">Consulter la matrice <span aria-hidden="true">↓</span></a>
+        </div>
+        <aside class="identity-panel" aria-label="Informations sur l’étudiant">
+          <div class="identity-monogram" data-field-initials>PN</div>
+          <div class="identity-details">
+            <span class="identity-label">ÉTUDIANT</span>
+            <h2 data-field="name">Prénom Nom</h2>
+            <p data-field="program">BUT Génie mécanique et productique · 1re année</p>
+            <p data-field="location">IUT à compléter</p>
           </div>
-          <div class="hero-meta"><span data-field="program">BUT Génie mécanique et productique · 1re année</span><span class="meta-separator">/</span><span data-field="location">IUT à compléter</span></div>
-        </div>
-        <div class="hero-art" aria-label="Illustration décorative">
-          <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
-          <div class="art-sun"></div>          <div class="art-card card-back"><span>COMPÉTENCES</span><b>✳</b></div>
-          <div class="art-card card-front"><span>PORTFOLIO<br><b>BUT 1</b></span><i>↗</i></div>
-          <span class="art-note note-top">CURIEUX·SE PAR NATURE</span><span class="art-note note-bottom">APPRENDRE · FAIRE · PARTAGER</span>
-          <span class="art-spark spark-one">✳</span><span class="art-spark spark-two">+</span>
-        </div>
-        <a class="scroll-hint" href="#profil"><span></span>Défiler pour découvrir</a>
+          <span class="identity-year">BUT 1 <b>·</b> 2026</span>
+        </aside>
       </section>
 
-      <section id="profil" class="profile-section section-wrap">
-        <div class="section-heading"><span class="section-index">01 / PROFIL</span><span class="section-rule"></span><span class="section-note">Quelques mots sur moi</span></div>
-        <div class="profile-grid">
-          <div class="profile-title"><h2>Mon regard<br>sur le <span class="serif-accent">GMP.</span></h2><div class="profile-stamp"><span>EN<br>BREF</span><b>✳</b></div></div>
-          <div class="profile-body"><p class="profile-intro" data-field="about">Je suis en première année de BUT Génie mécanique et productique. Ce portfolio rassemble mes preuves, mon autoévaluation et les apprentissages qui construisent mon projet professionnel.</p><p data-field="aboutDetail">Présente-toi avec tes mots : ce qui t’intéresse dans la conception, la fabrication ou l’organisation industrielle, tes expériences et ce que tu souhaites explorer. Sélectionne les traces qui te ressemblent, pas toutes tes productions.</p><div class="fact-row"><div><span class="fact-label">FORMATION</span><strong data-field="programShort">BUT 1 · GMP</strong></div><div><span class="fact-label">IUT</span><strong data-field="location">À compléter</strong></div><div><span class="fact-label">MON CAP</span><strong data-field="currently">À compléter</strong></div></div></div>
+      <section class="summary-strip page-width" aria-label="Résumé du portfolio">
+        <div><span class="summary-value" id="summary-proofs">0</span><span class="summary-label">PREUVES DOCUMENTÉES</span></div>
+        <div><span class="summary-value" id="summary-ues">0</span><span class="summary-label">UNITÉS D’ENSEIGNEMENT</span></div>
+        <div><span class="summary-value" id="summary-competencies">0 / 4</span><span class="summary-label">COMPÉTENCES ILLUSTRÉES</span></div>
+        <p>Les indicateurs évoluent avec l’ajout de nouvelles traces.</p>
+      </section>
+
+      <section id="matrice" class="matrix-section page-width">
+        <div class="section-heading">
+          <div><span class="section-kicker">01 — PARCOURS ET RÉALISATIONS</span><h2>La matrice des preuves</h2></div>
+          <p>Chaque ligne situe une réalisation dans le temps et dans son unité d’enseignement. Les colonnes indiquent les compétences mobilisées.</p>
+        </div>
+        <div class="matrix-toolbar">
+          <label class="search-control"><span>Rechercher</span><input id="matrix-search" type="search" placeholder="SAÉ, TP, mot-clé…" autocomplete="off"></label>
+          <label class="select-control"><span>Unité d’enseignement</span><select id="ue-filter"><option value="">Toutes les UE</option></select></label>
+          <label class="select-control"><span>Situation professionnelle</span><select id="situation-filter"><option value="">Toutes les situations</option></select></label>
+          <button id="clear-filters" class="clear-filters" type="button">Effacer les filtres</button>
+        </div>
+        <div class="matrix-legend" aria-label="Légende des compétences">
+          <span><b>C1</b> Spécifier</span><span><b>C2</b> Développer</span><span><b>C3</b> Réaliser</span><span><b>C4</b> Exploiter</span>
+        </div>
+        <div class="matrix-scroll" tabindex="0" aria-label="Matrice des preuves, défilement horizontal disponible">
+          <table class="evidence-matrix">
+            <thead><tr>
+              <th class="timeline-heading" scope="col">PÉRIODE / UNITÉ D’ENSEIGNEMENT</th>
+              <th scope="col"><span class="column-code">C1</span><span class="column-name">Spécifier</span></th>
+              <th scope="col"><span class="column-code">C2</span><span class="column-name">Développer</span></th>
+              <th scope="col"><span class="column-code">C3</span><span class="column-name">Réaliser</span></th>
+              <th scope="col"><span class="column-code">C4</span><span class="column-name">Exploiter</span></th>
+            </tr></thead>
+            <tbody id="matrix-body"></tbody>
+          </table>
+        </div>
+        <div class="matrix-foot"><span><b id="visible-count">0</b> ligne affichée</span><span>Les preuves sont classées de la plus récente à la plus ancienne.</span></div>
+      </section>
+
+      <section id="referentiel" class="reference-section">
+        <div class="page-width">
+          <div class="section-heading">
+            <div><span class="section-kicker">02 — REPÈRES DE FORMATION</span><h2>Compétences et situations</h2></div>
+            <p>Le référentiel situe les apprentissages. Les réalisations personnelles se trouvent dans la matrice ci-dessus.</p>
+          </div>
+          <div id="competency-list" class="competency-list"></div>
+          <div class="situations-panel">
+            <div class="situations-heading"><span class="section-kicker">SITUATIONS PROFESSIONNELLES DU BUT GMP</span><span>BE · BM · OPI</span></div>
+            <div id="situation-list" class="situation-list"></div>
+            <p class="transversal-note"><b>COMPÉTENCE TRANSVERSALE</b> Agir en technicien supérieur : raisonner avec méthode, communiquer, travailler en équipe et en autonomie, agir en responsabilité et analyser sa pratique.</p>
+          </div>
         </div>
       </section>
 
-      <section id="competences" class="journey-section">
-        <div class="section-wrap">
-          <div class="section-heading"><span class="section-index">02 / RÉFÉRENTIEL</span><span class="section-rule"></span><span class="section-note">BUT Génie mécanique et productique</span></div>
-          <div class="journey-heading"><h2>Quatre compétences,<br><span class="serif-accent">un métier.</span></h2><p>En BUT 1, je m’entraîne au niveau 1 : mobiliser ces compétences dans un cas simple, en m’appuyant sur des situations professionnelles.</p></div>
-          <div id="competency-grid" class="competency-grid"></div>
-        </div>
-      </section>
-
-      <section id="situations" class="projects-section section-wrap">
-        <div class="section-heading"><span class="section-index">03 / SITUATIONS</span><span class="section-rule"></span><span class="section-note">Les contextes où je progresse</span></div>
-        <div class="projects-heading"><div><h2>Les compétences<br>en <span class="serif-accent">action.</span></h2></div><p>Une compétence prend tout son sens dans une situation réelle. Ces quatre situations professionnelles structurent le BUT GMP.</p></div>
-        <div id="situation-grid" class="situation-grid"></div>
-        <div class="shared-situation"><span class="shared-icon">✳</span><div><span class="project-category">TRANSVERSAL · COMMUN À TOUS LES BUT</span><h3>Agir en technicien supérieur</h3><p>Développer une pensée critique et l’exprimer ; communiquer en français et en anglais ; travailler en équipe et en autonomie ; agir en responsabilité, analyser ses actions et s’autoévaluer pour progresser.</p></div></div>
-      </section>
-
-      <section id="preuves" class="skills-section">
-        <div class="section-wrap">
-          <div class="section-heading"><span class="section-index">04 / MES PREUVES</span><span class="section-rule"></span><span class="section-note">Des traces, pas seulement des déclarations</span></div>
-          <div class="skills-grid"><div><h2>Mon travail,<br><span class="serif-accent">en vrai.</span></h2><p>SAÉ, TP, TD, projets personnels ou engagements : je sélectionne des traces qui montrent ce que j’ai fait, appris et ce que je peux encore améliorer.</p></div><div class="evidence-guide"><span class="guide-kicker">UNE PREUVE UTILE</span><div class="guide-steps"><div><b>01</b><span><strong>Le contexte</strong><small>Situation, consigne, contraintes</small></span></div><div><b>02</b><span><strong>Ma contribution</strong><small>Actions, choix, outils, résultat</small></span></div><div><b>03</b><span><strong>Mon recul</strong><small>Acquis, difficultés, prochaine étape</small></span></div></div></div></div>
-          <div class="evidence-toolbar"><div><h3>Traces sélectionnées</h3><span id="evidence-count">0 preuve publiée</span></div><div id="evidence-filters" class="evidence-filters" aria-label="Filtrer les preuves par compétence"></div></div>
-          <div id="evidence-list" class="evidence-list"></div>
-          <p class="evidence-note"><span>À FAIRE</span> Remplace les exemples dans <code>data.js</code> par tes productions et ajoute un lien vers un document ou une image publiable. N’ajoute pas de diapos de cours : elles ne prouvent pas un savoir-faire.</p>
-        </div>
-      </section>
-
-      <section id="bilan" class="journey-section assessment-section">
-        <div class="section-wrap">
-          <div class="section-heading"><span class="section-index">05 / AUTOÉVALUATION</span><span class="section-rule"></span><span class="section-note">Une progression, pas une note</span></div>
-          <div class="journey-heading"><h2>Prendre du recul,<br><span class="serif-accent">avancer mieux.</span></h2><p>Je fais le point à partir de mes preuves. En BUT 1, j’observe ma capacité à agir dans des cas simples et j’identifie la prochaine chose à travailler.</p></div>
-          <div id="assessment-grid" class="assessment-grid"></div>
-          <div class="reflection-panel"><span class="guide-kicker">POUR MON BILAN À L’ORAL</span><div><p>Quelle preuve montre le mieux ma progression cette année ?</p><p>Qu’est-ce qui a été difficile, et comment m’y suis-je pris·e ?</p><p>Quelle compétence ou quelle situation ai-je envie d’explorer ensuite ?</p></div></div>
-        </div>
-      </section>
-
-      <section id="contact" class="contact-section section-wrap">
-        <div class="contact-decoration">✳</div>
-        <span class="section-index">06 / CONTACT</span>
-        <h2>Une idée en tête ?<br><span class="serif-accent">Parlons-en.</span></h2>
-        <p>Un projet, une question ou simplement envie d’échanger ? Ma boîte mail est ouverte.</p>
-        <a id="email-link" class="button button-light" href="mailto:bonjour@example.com">M’écrire un message <span aria-hidden="true">↗</span></a>
-        <div class="contact-bottom"><span data-field="name">Prénom Nom</span><span data-field="email">email@exemple.fr</span><span data-field="location">France</span></div>
+      <section id="profil" class="profile-section page-width">
+        <div class="profile-copy"><span class="section-kicker">03 — PROFIL</span><h2>À propos</h2><p data-field="about">Je suis étudiant en première année de BUT Génie mécanique et productique. Ce portfolio rassemble mes réalisations, mes apprentissages et ma progression.</p><p data-field="aboutDetail">Présente ici les domaines qui t’intéressent, tes expériences et ton projet professionnel.</p></div>
+        <aside class="profile-facts">
+          <div><span>FORMATION</span><strong data-field="programShort">BUT 1 · GMP</strong></div>
+          <div><span>ÉTABLISSEMENT</span><strong data-field="location">IUT à compléter</strong></div>
+          <div><span>PROJET</span><strong data-field="currently">À compléter</strong></div>
+          <div><span>COURRIEL</span><a data-field="email" id="profile-email" href="mailto:email@exemple.fr">email@exemple.fr</a></div>
+        </aside>
       </section>
     </main>
 
-    <footer class="site-footer section-wrap"><a class="wordmark" href="#accueil"><span class="wordmark-mark">P.</span><span data-field="name">Prénom Nom</span></a><span>Portfolio BUT 1 GMP · 2026</span><div><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Activer le thème sombre">◐ <span>Thème</span></button><button id="print-button" class="print-button" type="button">Imprimer / PDF <span aria-hidden="true">↗</span></button></div></footer>
+    <footer class="site-footer"><span>Portfolio BUT 1 · Génie mécanique et productique · 2026</span><button id="print-button" type="button">Imprimer ou enregistrer en PDF</button></footer>
     <script src="data.js"></script>
     <script src="app.js"></script>
   </body>
